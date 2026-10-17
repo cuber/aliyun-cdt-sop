@@ -3,6 +3,10 @@
 香港抢占式实例 + 1GiB 系统盘 + CDT 每月 200G 免费公网流量 + 按流量自动启停，整机约 4.8 元/月。
 思路来自 https://bbs.biliup.rs/t/topic/46 ，建机和保活全部脚本化，人只做下面几步。
 
+建成后的实例长这样：按量抢占式，2 核 512MiB，ESSD 1GiB 系统盘，200Mbps 按流量公网，香港地域。
+
+![建成后的 ECS 实例详情：按量抢占式、ecs.e-c4m1.large、ESSD 1GiB、200Mbps 按使用流量](https://raw.githubusercontent.com/cuber/aliyun-cdt-sop/master/docs/00-instance-running.png)
+
 ## 你要做的事（都在阿里云控制台）
 
 1. **RAM 子用户和 AK/SK**：RAM 控制台 → 身份管理 → 用户 → 创建用户。
