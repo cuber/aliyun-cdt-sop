@@ -22,9 +22,9 @@
 3. **开通 OSS 服务**：打开 oss.console.aliyun.com，没开通会看到下面这个页面，点"立即开通"（开通本身不收费）。
 
     ![OSS 控制台提示尚未开通，点立即开通](https://raw.githubusercontent.com/cuber/aliyun-cdt-sop/master/docs/04-oss-activate.png)
-4. **授权镜像导入**：这一步和第 2 步无关。导入镜像是 ECS 这个服务去读你的 OSS bucket，用的不是你的 AK，而是扮演你账号里的一个角色，所以给 AK 再多权限也没用（实测：AK 已挂 AliyunOSSFullAccess 仍报 NoSetRoletoECSServiceAcount）。角色名固定是 **AliyunECSImageImportDefaultRole**，最省事的做法是让控制台自动建：ECS 控制台 → 镜像 → 导入镜像 → 第一步"授予 ECS 对 OSS 资源的访问权限" → 同意授权，然后取消向导。
+4. **授权镜像导入**：这一步和第 2 步无关。导入镜像是 ECS 这个服务去读你的 OSS bucket，用的不是你的 AK，而是扮演你账号里的一个角色，所以给 AK 再多权限也没用（实测：AK 已挂 AliyunOSSFullAccess 仍报 NoSetRoletoECSServiceAcount）。角色名固定是 **AliyunECSImageImportDefaultRole**。手动建：RAM → 身份管理 → 角色 → 创建角色 → 阿里云服务 → 普通服务角色 → 受信服务选"云服务器"，角色名称填 AliyunECSImageImportDefaultRole。
 
-    建好后逐项核对。RAM → 身份管理 → 角色，列表里要有这个角色，类型是普通角色：
+    建好后逐项核对。角色列表里要有它，类型是普通角色：
 
     ![RAM 角色列表中的 AliyunECSImageImportDefaultRole](https://raw.githubusercontent.com/cuber/aliyun-cdt-sop/master/docs/05-ram-role-list.png)
 
