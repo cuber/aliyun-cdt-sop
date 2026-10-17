@@ -1,0 +1,9 @@
+# 真实凭证，永远不要提交
+config.yaml
+# 已建资源的 ID、串口输出、截图：账号相关，只留本地
+state/
+# 运行产物
+*.log
+__pycache__/
+.venv/
+.DS_Store

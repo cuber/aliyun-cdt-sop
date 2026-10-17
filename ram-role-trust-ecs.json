@@ -1,0 +1,12 @@
+{
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": ["ecs.aliyuncs.com"]
+      }
+    }
+  ],
+  "Version": "1"
+}

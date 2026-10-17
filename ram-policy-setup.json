@@ -1,0 +1,29 @@
+{
+  "Version": "1",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "vpc:DescribeVpcs", "vpc:CreateVpc", "vpc:DeleteVpc", "vpc:DescribeVpcAttribute",
+        "vpc:DescribeVSwitches", "vpc:CreateVSwitch", "vpc:DeleteVSwitch", "vpc:DescribeVSwitchAttributes",
+        "vpc:DescribeRouteTables", "vpc:DescribeRegions", "vpc:DescribeZones",
+        "vpc:DescribeEipAddresses", "vpc:AllocateEipAddress", "vpc:AssociateEipAddress",
+        "vpc:UnassociateEipAddress", "vpc:ReleaseEipAddress", "vpc:ModifyEipAddressAttribute",
+        "vpc:DescribeCommonBandwidthPackages", "vpc:CreateCommonBandwidthPackage",
+        "vpc:DeleteCommonBandwidthPackage", "vpc:AddCommonBandwidthPackageIp",
+        "vpc:RemoveCommonBandwidthPackageIp", "vpc:ModifyCommonBandwidthPackageAttribute",
+        "vpc:ModifyCommonBandwidthPackageSpec"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "cdt:GetCdtServiceStatus", "cdt:OpenCdtService",
+        "cdt:GetCdtInternetServiceStatus", "cdt:OpenCdtInternetService",
+        "cdt:ListCdtInternetTraffic", "cdt:ListCdtProducts", "cdt:ListCdtTrafficTiers"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

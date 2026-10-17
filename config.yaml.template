@@ -1,0 +1,24 @@
+# cp config.yaml.template config.yaml && chmod 600 config.yaml
+# 只需要填 RAM 子用户的 AK/SK，其余都有默认值（香港地域，180G 停机，每分钟检查一次）。
+# config.yaml 已被 .gitignore 忽略，不要粘贴到聊天或提交。
+
+access_key_id: ""
+access_key_secret: ""
+
+# ---- 以下全部可选 ----
+# region_id: cn-hongkong
+# traffic_threshold_gb: 180
+# check_interval_seconds: 60
+# instance_type: ecs.e-c4m1.large
+# zone_id: cn-hongkong-d
+
+# 多个阿里云账号时改用列表写法（name 是别名，也是 state/<name>.json 的文件名；uid 填了会核对 AK 归属）：
+# accounts:
+#   - name: main
+#     access_key_id: ""
+#     access_key_secret: ""
+#   - name: second
+#     access_key_id: ""
+#     access_key_secret: ""
+#     # uid: "1234567890123456"
+#     # region_id: cn-hongkong

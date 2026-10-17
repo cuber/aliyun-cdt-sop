@@ -1,0 +1,21 @@
+{
+  "Version": "1",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ecs:DescribeInstances",
+        "ecs:StartInstances",
+        "ecs:StopInstances"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "cdt:ListCdtInternetTraffic"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
