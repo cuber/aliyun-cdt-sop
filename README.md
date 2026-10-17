@@ -16,7 +16,7 @@
     填登录名，访问配置只勾"使用永久 AccessKey 访问"，再勾"我确认必须创建 AccessKey"，确定后立刻保存 AccessKey ID 和 Secret，Secret 只显示这一次。
 
     ![创建用户表单，勾选使用永久 AccessKey 访问和确认创建 AccessKey](https://raw.githubusercontent.com/cuber/aliyun-cdt-sop/master/docs/02-ram-user-accesskey.png)
-2. **给这个子用户授权**（也就是给这对 AK 授权）：RAM → 用户 → 该用户 → 权限管理 → 新增授权，挂 6 个系统策略：AliyunECSFullAccess、AliyunOSSFullAccess、AliyunCDTFullAccess、AliyunVPCFullAccess、AliyunEIPFullAccess、AliyunCommonBandwidthPackageFullAccess（最后一个只在要建共享带宽时需要）。全是系统策略，不用自己写；[`ram-policy-setup.json`](https://raw.githubusercontent.com/cuber/aliyun-cdt-sop/master/ram-policy-setup.json) 是想收窄权限时的最小化替代。挂完应该是这样：
+2. **给这个子用户授权**（也就是给这对 AK 授权）：RAM → 用户 → 该用户 → 权限管理 → 新增授权，挂 6 个系统策略：AliyunECSFullAccess、AliyunOSSFullAccess、AliyunCDTFullAccess、AliyunVPCFullAccess、AliyunEIPFullAccess、AliyunCommonBandwidthPackageFullAccess（最后一个只在要建共享带宽时需要）。挂完应该是这样：
 
     ![用户权限管理页，列出 OSS、ECS、CDT、VPC、EIP、共享带宽 6 个 FullAccess 系统策略](https://raw.githubusercontent.com/cuber/aliyun-cdt-sop/master/docs/03-ram-user-policies.png)
 3. **开通 OSS 服务**：打开 oss.console.aliyun.com，没开通会看到下面这个页面，点"立即开通"（开通本身不收费）。
