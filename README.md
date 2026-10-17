@@ -22,23 +22,20 @@
 3. **开通 OSS 服务**：打开 oss.console.aliyun.com，没开通会看到下面这个页面，点"立即开通"（开通本身不收费）。
 
     ![OSS 控制台提示尚未开通，点立即开通](https://raw.githubusercontent.com/cuber/aliyun-cdt-sop/master/docs/04-oss-activate.png)
-4. **授权镜像导入**：这一步和第 2 步无关。导入镜像是 ECS 这个服务去读你的 OSS bucket，用的不是你的 AK，而是扮演你账号里的一个角色，所以给 AK 再多权限也没用（实测：AK 已挂 AliyunOSSFullAccess 仍报 NoSetRoletoECSServiceAcount，把 AliyunECSImageImportRolePolicy 挂到用户上同样无效，它是给角色用的）。账号里要有角色 **AliyunECSImageImportDefaultRole**（名字是阿里云约定的默认值，想用别的名字就在 `import_image.py --role-name` 里指定），并且满足两点，缺一个都会报 `NoSetRoletoECSServiceAcount`：
-    - 角色上挂系统策略 **AliyunECSImageImportRolePolicy**（RAM → 角色 → 该角色 → 权限管理 → 新增授权 → 系统策略，精确搜这个名字）
-    - 信任策略允许 ECS 扮演，内容见 [`ram-role-trust-ecs.json`](https://raw.githubusercontent.com/cuber/aliyun-cdt-sop/master/ram-role-trust-ecs.json)（RAM → 角色 → 该角色 → 信任策略）
+4. **授权镜像导入**：这一步和第 2 步无关。导入镜像是 ECS 这个服务去读你的 OSS bucket，用的不是你的 AK，而是扮演你账号里的一个角色，所以给 AK 再多权限也没用（实测：AK 已挂 AliyunOSSFullAccess 仍报 NoSetRoletoECSServiceAcount）。角色名固定是 **AliyunECSImageImportDefaultRole**，最省事的做法是让控制台自动建：ECS 控制台 → 镜像 → 导入镜像 → 第一步"授予 ECS 对 OSS 资源的访问权限" → 同意授权，然后取消向导。
 
-    最省事的做法是让控制台自动建：ECS 控制台 → 镜像 → 导入镜像 → 第一步"授予 ECS 对 OSS 资源的访问权限" → 同意授权，然后取消向导，两点都会配好。
-
-    配好后逐项核对。RAM → 身份管理 → 角色，列表里要有这个角色，类型是普通角色：
+    建好后逐项核对。RAM → 身份管理 → 角色，列表里要有这个角色，类型是普通角色：
 
     ![RAM 角色列表中的 AliyunECSImageImportDefaultRole](https://raw.githubusercontent.com/cuber/aliyun-cdt-sop/master/docs/05-ram-role-list.png)
 
-    点进角色 → 权限管理，用"精确授权"搜 AliyunECSImageImportRolePolicy 挂上，这是最容易漏的一步：
+    点进角色 → 权限管理，必须挂着系统策略 **AliyunECSImageImportRolePolicy**，没有就用"精确授权"搜这个名字挂上。这是最容易漏的一步，漏了导入镜像报 `NoSetRoletoECSServiceAcount`：
 
     ![角色权限管理页，通过精确授权挂上 AliyunECSImageImportRolePolicy](https://raw.githubusercontent.com/cuber/aliyun-cdt-sop/master/docs/06-ram-role-policy.png)
 
-    角色 → 信任策略，要允许 ecs.aliyuncs.com 扮演，和 [`ram-role-trust-ecs.json`](https://raw.githubusercontent.com/cuber/aliyun-cdt-sop/master/ram-role-trust-ecs.json) 一致：
+    角色 → 信任策略，Service 必须是 ecs.aliyuncs.com：
 
     ![角色信任策略页，Principal Service 为 ecs.aliyuncs.com](https://raw.githubusercontent.com/cuber/aliyun-cdt-sop/master/docs/07-ram-role-trust.png)
+
 5. **充值**：账户可用余额不低于 100 元，这是按量付费的门槛。
 
 
@@ -57,5 +54,5 @@ cp config.yaml.template config.yaml && chmod 600 config.yaml
 - [`AGENTS.md`](https://github.com/cuber/aliyun-cdt-sop/blob/master/AGENTS.md)：给 AI 的执行手册（[`CLAUDE.md`](https://github.com/cuber/aliyun-cdt-sop/blob/master/CLAUDE.md) 引用它），剩下的事交给它
 - [`docs/errors.md`](https://github.com/cuber/aliyun-cdt-sop/blob/master/docs/errors.md)：报错对照；[`docs/decisions.md`](https://github.com/cuber/aliyun-cdt-sop/blob/master/docs/decisions.md)：为什么这样设计
 - [`config.yaml.template`](https://raw.githubusercontent.com/cuber/aliyun-cdt-sop/master/config.yaml.template)：配置模板
-- [`ram-policy-setup.json`](https://raw.githubusercontent.com/cuber/aliyun-cdt-sop/master/ram-policy-setup.json)：第 2 步的最小化自定义策略（可选）；[`ram-role-trust-ecs.json`](https://raw.githubusercontent.com/cuber/aliyun-cdt-sop/master/ram-role-trust-ecs.json)：第 4 步角色的信任策略；[`ram-policy.json`](https://raw.githubusercontent.com/cuber/aliyun-cdt-sop/master/ram-policy.json)：保活阶段的最小权限
+- [`ram-policy-setup.json`](https://raw.githubusercontent.com/cuber/aliyun-cdt-sop/master/ram-policy-setup.json)：第 2 步的最小化自定义策略（可选）；[`ram-role-trust-ecs.json`](https://raw.githubusercontent.com/cuber/aliyun-cdt-sop/master/ram-role-trust-ecs.json)：第 4 步角色的信任策略，手动建角色时可直接粘贴；[`ram-policy.json`](https://raw.githubusercontent.com/cuber/aliyun-cdt-sop/master/ram-policy.json)：保活阶段的最小权限
 - `*.py`：脚本，用途见 AGENTS.md 仓库结构表
